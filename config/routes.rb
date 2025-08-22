@@ -5,12 +5,22 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 namespace :api do
-  get 'patient', to: 'epic#patient'
-  get 'patient-search', to: 'epic#patient_search'
-  post 'patient-match', to: 'epic#patient_match'
+    namespace :v1 do
+      post 'chat/ask', to: 'chat#ask'
+      get 'patient', to: 'patient#patient'
+  get 'patient-search', to: 'patient#patient_search'
+  post 'patient-match', to: 'patient#patient_match'
+  get 'patient-observation', to: 'patient#fetch_patient_observation'
+  get 'patient-condition', to: 'patient#fetch_patient_condition'
+    end
+
+  
+
   get 'observations', to: 'epic#observations'
   get 'test', to: 'epic#test'
   get 'conditions', to: 'epic#conditions'
+  get 'bulk-file-request', to: 'epic#bulk_file_request'
+
 
   # Add other endpoints as needed: bulk-export, appointments, observation, etc.
 end

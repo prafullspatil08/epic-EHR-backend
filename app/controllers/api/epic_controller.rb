@@ -14,27 +14,6 @@ class Api::EpicController < ApplicationController
     render json: { success: false, error: e.message }, status: :bad_request
   end
 
-  # GET /api/patient-search?family=Smith&gender=male
-  def patient_search
-    token = EpicAuth.get_access_token
-    client = EpicFhirClient.new(token)
-    query = request.query_string
-    data = client.get("Patient?#{query}")
-    render json: { success: true, message: 'Search results', data: data }
-  rescue => e
-    render json: { success: false, error: e.message }, status: :bad_request
-  end
-
-  # POST /api/patient-match
-  def patient_match
-    token = EpicAuth.get_access_token
-    client = EpicFhirClient.new(token)
-    data = client.post('Patient/$match', request.request_parameters)
-    render json: { success: true, message: 'Match results', data: data }
-  rescue => e
-    render json: { success: false, error: e.message }, status: :bad_request
-  end
-
   # GET /api/observations?patient_id=123
   def observations
     token = EpicAuth.get_access_token
@@ -42,6 +21,18 @@ class Api::EpicController < ApplicationController
     patient_id = params[:patient_id]
     data = client.fetch_observations(patient_id)
     render json: { success: true, message: 'Observations fetched', data: data }
+  rescue => e
+    render json: { success: false, error: e.message }, status: :bad_request
+  end
+
+  # GET /api/bulk-file-request?bulk_id=123&output_id=456
+  def bulk_file_request
+    token = EpicAuth.get_access_token
+    client = EpicFhirClient.new(token)
+    bulk_id = params[:bulk_id];
+    output_id = params[:output_id]
+    data = client.fetch_bulk_file_request(bulk_id,output_id)
+    render json: { success: true, message: 'Match results', data: data }
   rescue => e
     render json: { success: false, error: e.message }, status: :bad_request
   end

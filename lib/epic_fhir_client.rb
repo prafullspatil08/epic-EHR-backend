@@ -17,9 +17,24 @@ class EpicFhirClient
     JSON.parse(response.body)
   end
 
+  def fetch_patient_observation(patient_id, category)
+    puts "Fetching patient observation for patient ID: #{patient_id} and category: #{category}"
+    get("Observation?patient=#{patient_id}&category=#{category}")
+  end
+
+  def fetch_patient_condition(patient_id)
+    puts "Fetching patient condition for patient ID: #{patient_id}"
+    get("Condition?patient=#{patient_id}")
+  end
+
   def fetch_observations(patient_id)
     puts "Fetching observations for patient ID: #{patient_id}"
     get("Observation/#{patient_id}")
+  end
+
+  def fetch_bulk_file_request(bulk_file_id,output_id)
+    puts "Fetching bulk file request for bulk file ID: #{bulk_file_id} and output ID: #{output_id}"
+    get("BulkRequest/#{bulk_file_id}/#{output_id}")
   end
 
   def fetch_conditions(patient_id)
