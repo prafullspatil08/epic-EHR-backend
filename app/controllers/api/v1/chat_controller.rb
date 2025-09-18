@@ -53,7 +53,7 @@ module Api
           end
         end
 
-        prompt_parts = ["Summarize the following patient's clinical information for a clinician.\n"]
+        prompt_parts = ["Summarize the following patient's clinical information for a clinician in bullet points.\n"]
         prompt_parts << "Vitals: #{vitals.join(', ')}\n" if vitals.present?
         prompt_parts << "Medications: #{medications.join(', ')}\n" if medications.present?
         prompt_parts << "Lab Results: #{labs.join(', ')}\n" if labs.present?
