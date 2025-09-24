@@ -8,10 +8,12 @@ namespace :api do
     namespace :v1 do
       post 'chat/ask', to: 'chat#ask'
       get 'patient', to: 'patient#patient'
-  get 'patient-search', to: 'patient#patient_search'
-  post 'patient-match', to: 'patient#patient_match'
-  get 'patient-observation', to: 'patient#fetch_patient_observation'
-  get 'patient-condition', to: 'patient#fetch_patient_condition'
+      get 'patient-search', to: 'patient#patient_search'
+      post 'patient-match', to: 'patient#patient_match'
+      get 'patient-observation', to: 'patient#fetch_patient_observation'
+      get 'patient-condition', to: 'patient#fetch_patient_condition'
+      get 'bulk-kick-off', to: 'patient#bulk_kick_off'
+      get 'patient-by-mrn', to: 'patient#fetch_patient_by_mrn'
     end
 
   

@@ -6,7 +6,7 @@ class Api::V1::PatientController < ApplicationController
     def patient
       patient_id = params[:id]
       data = @client.get("Patient/#{patient_id}")
-      render json: { success: true, message: 'Patient fetched', data: data }
+      render json: data
     end
   
     # GET /api/patient-search?family=Smith&gender=male
@@ -27,15 +27,30 @@ class Api::V1::PatientController < ApplicationController
       patient_id = params[:patient]
       category = params[:category]
       data = @client.fetch_patient_observation(patient_id, category)
-      render json: { success: true, message: 'Observations fetched', data: data }
+      render json: data
     end
   
     # GET /api/patient-condition
     def fetch_patient_condition
       patient_id = params[:patient]
       data = @client.fetch_patient_condition(patient_id)
-      render json: { success: true, message: 'Condition fetched', data: data }
+      render json: data
     end
+
+    # GET /api/bulk-kick-off?group_id=123
+    def bulk_kick_off
+      puts "Bulk kick off for group ID: #{params[:group_id]}"
+      group_id = params[:group_id]
+      data = @client.fetch_bulk_kick_off(group_id)
+      render json: { success: true, message: 'Bulk kick off results', data: data }
+    end
+
+    def fetch_patient_by_mrn
+      mrn = params[:identifier]
+      data = @client.fetch_patient_by_mrn(mrn)
+      render json: data
+    end
+      
   
     private
   
@@ -45,6 +60,6 @@ class Api::V1::PatientController < ApplicationController
     end
   
     def handle_error(exception)
-      render json: { success: false, error: exception.message }, status: :bad_request
+      render json: { success: false, error: exception.message }, status: :ok
     end
   end
