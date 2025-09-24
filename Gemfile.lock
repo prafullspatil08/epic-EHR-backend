@@ -122,7 +122,7 @@ GEM
       pp (>= 0.6.0)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
-    json (2.13.2)
+    json (2.15.0)
     jwt (3.1.2)
       base64
     language_server-protocol (3.17.0.5)
@@ -279,7 +279,7 @@ GEM
       rubocop (>= 1.72)
       rubocop-performance (>= 1.24)
       rubocop-rails (>= 2.30)
-    ruby-openai (6.5.0)
+    ruby-openai (8.3.0)
       event_stream_parser (>= 0.3.0, < 2.0.0)
       faraday (>= 1)
       faraday-multipart (>= 1)
@@ -328,7 +328,7 @@ DEPENDENCIES
   rails (~> 7.2.2, >= 7.2.2.1)
   rest-client
   rubocop-rails-omakase
-  ruby-openai (~> 6.3)
+  ruby-openai (~> 8.3)
   tzinfo-data
 
 BUNDLED WITH
