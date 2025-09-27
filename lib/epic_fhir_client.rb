@@ -22,7 +22,7 @@ class EpicFhirClient
 
   def fetch_patient_observation(patient_id, category)
     puts "Fetching patient observation for patient ID: #{patient_id} and category: #{category}"
-    get("Observation?patient=#{patient_id}&category=#{category}")
+    get("Observation?patient=#{patient_id}")
   end
 
   def fetch_patient_condition(patient_id)
