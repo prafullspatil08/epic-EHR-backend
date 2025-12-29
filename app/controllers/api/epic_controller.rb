@@ -48,5 +48,55 @@ class Api::EpicController < ApplicationController
     render json: { success: false, error: e.message }, status: :bad_request
   end
 
+  def allergies
+    token = EpicAuth.get_access_token
+    client = EpicFhirClient.new(token)
+    patient_id = params[:patient_id]
+    data = client.fetch_allergies(patient_id)
+    render json: { success: true, message: 'Allergies fetched', data: data }
+  rescue => e
+    render json: { success: false, error: e.message }, status: :bad_request
+  end
+
+    def immunizations
+    token = EpicAuth.get_access_token
+    client = EpicFhirClient.new(token)
+    patient_id = params[:patient_id]
+    data = client.fetch_immunizations(patient_id)
+    render json: { success: true, message: 'Immunizations fetched', data: data }
+  rescue => e
+    render json: { success: false, error: e.message }, status: :bad_request
+  end
+
+  def procedures
+    token = EpicAuth.get_access_token
+    client = EpicFhirClient.new(token)
+    patient_id = params[:patient_id]
+    data = client.fetch_procedures(patient_id)
+    render json: { success: true, message: 'Procedures fetched', data: data }
+  rescue => e
+    render json: { success: false, error: e.message }, status: :bad_request
+  end
+
+  def care_plans
+    token = EpicAuth.get_access_token
+    client = EpicFhirClient.new(token)
+    patient_id = params[:patient_id]
+    data = client.care_plans(patient_id)
+    render json: { success: true, message: 'Care plans fetched', data: data }
+  rescue => e
+    render json: { success: false, error: e.message }, status: :bad_request
+  end
+
+  def diagnostic_reports
+    token = EpicAuth.get_access_token
+    client = EpicFhirClient.new(token)
+    patient_id = params[:patient_id]
+    data = client.fetch_diagnostic_reports(patient_id)
+    render json: { success: true, message: 'Diagnostic reports fetched', data: data }
+  rescue => e
+    render json: { success: false, error: e.message }, status: :bad_request
+  end
+
   # Other endpoints (bulk-export, bulk-status, bulk-download, appointments, observation) follow similar structure
 end

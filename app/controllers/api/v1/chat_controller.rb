@@ -26,11 +26,13 @@ module Api
         patient_info = extract_patient_info(data['patient'])
         conditions = extract_conditions(data['conditions'])
         observations = extract_observations(data['observations'])
+        allergies = extract_allergies(data['allergies'])
 
         prompt_parts = ["Summarize the following patient's clinical information for a clinician in bullet points.\n"]
         prompt_parts << patient_info if patient_info.present?
         prompt_parts << "\nConditions:\n#{conditions.join("\n")}" if conditions.present?
         prompt_parts << "\nObservations:\n#{observations.join("\n")}" if observations.present?
+        prompt_parts << "\nAllergies:\n#{allergies.join("\n")}" if allergies.present?
 
         return nil if prompt_parts.size <= 1
 
@@ -76,6 +78,25 @@ module Api
         return [] unless observations_data.present?
         # This can be expanded to handle observations when they are available
         []
+      end
+
+      def extract_allergies(allergies_data)
+        return [] unless allergies_data.present?
+
+        allergies_data.filter_map do |a|
+          next unless a['resourceType'] == 'AllergyIntolerance'
+
+          allergy_text = a.dig('code', 'text')
+          onset = a['onsetDateTime']
+          clinical_status = a.dig('clinicalStatus', 'coding', 0, 'code')
+          verification_status = a.dig('verificationStatus', 'coding', 0, 'code')
+
+          details = ["since #{onset}" ]
+          details << "clinical status: #{clinical_status}" if clinical_status.present?
+          details << "verification status: #{verification_status}" if verification_status.present?
+
+          "- #{allergy_text} (#{details.join(', ')})"
+        end
       end
 
       def chat_params

@@ -18,6 +18,11 @@ class EpicFhirClient
     })
     puts "Response: #{response}"
     JSON.parse(response.body)
+
+  rescue => e
+    Rails.logger.error "Epic FHIR client error: #{e.message}"
+    Rails.logger.error "Epic FHIR client backtrace: #{e.backtrace.join("\n")}"
+    raise "Epic FHIR request failed: #{e.message}"
   end
 
   def fetch_patient_observation(patient_id, category)
@@ -51,6 +56,39 @@ class EpicFhirClient
 
   def fetch_conditions(patient_id)
     get("Condition/#{patient_id}")
+  end
+
+  def fetch_patient_allergies(patient_id)
+    puts "Fetching patient allergies for patient ID: #{patient_id}"
+    get("AllergyIntolerance?patient=#{patient_id}")
+  end
+
+  def fetch_patient_immunizations(patient_id)
+    puts "Fetching patient immunizations for patient ID: #{patient_id}"
+    get("Immunization?patient=#{patient_id}")
+  end
+
+  # 3. Encounter
+  def fetch_patient_encounters(patient_id)
+    get("Encounter?patient=#{patient_id}&_count=50")
+  end
+
+  # 4. Medication Request
+  def fetch_patient_medication_requests(patient_id)
+    get("MedicationRequest?patient=#{patient_id}")
+  end
+
+
+  def fetch_patient_procedures(patient_id)
+    get("Procedure?patient=#{patient_id}")
+  end
+
+  def fetch_patient_care_plans(patient_id)
+    get("CarePlan?patient=#{patient_id}")
+  end
+
+  def fetch_patient_diagnostic_reports(patient_id)
+    get("DiagnosticReport?patient=#{patient_id}")
   end
 
   def post(endpoint, body)

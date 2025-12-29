@@ -50,6 +50,54 @@ class Api::V1::PatientController < ApplicationController
       data = @client.fetch_patient_by_mrn(mrn)
       render json: data
     end
+
+    def fetch_patient_allergies
+      patient_id = params[:patient]
+      data = @client.fetch_patient_allergies(patient_id)
+      render json: data
+    end
+
+    def fetch_patient_immunizations
+      patient_id = params[:patient]
+      data = @client.fetch_patient_immunizations(patient_id)
+      render json: data
+    end
+
+    def fetch_patient_medication_requests
+      patient_id = params[:patient]
+      data = @client.fetch_patient_medication_requests(patient_id)
+      render json: data
+    end
+
+    def fetch_patient_encounters
+      patient_id = params[:patient]
+      data = @client.fetch_patient_encounters(patient_id)
+      render json: data
+    end
+
+    def fetch_patient_procedures
+      patient_id = params[:patient]
+      data = @client.fetch_patient_procedures(patient_id)
+      render json: data
+    end
+
+    def fetch_patient_care_plans
+      patient_id = params[:patient]
+      data = @client.fetch_patient_care_plans(patient_id)
+      render json: data
+    end
+
+    def patient_everything
+      patient_id = params[:patient]
+      data = @client.get("Patient/#{patient_id}/$everything")
+      render json: data
+    end
+
+    def fetch_patient_diagnostic_reports
+      patient_id = params[:patient]
+      data = @client.fetch_patient_diagnostic_reports(patient_id)
+      render json: data
+    end
       
   
     private
