@@ -8,7 +8,7 @@ require 'openssl'
 class EpicAuth
   TOKEN_URL = ENV['EPIC_TOKEN_URL']
   CLIENT_ID = ENV['EPIC_CLIENT_ID']
-  PRIVATE_JWK_PATH = Rails.root.join("config/keys/epic-private.jwk")
+  PRIVATE_JWK_PATH = Rails.root.join("etc/secrets/epic-private.jwk")
 
   def self.rsa_key_from_jwk(jwk)
     n  = OpenSSL::BN.new(Base64.urlsafe_decode64(jwk["n"]), 2)
